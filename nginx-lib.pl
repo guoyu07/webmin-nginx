@@ -79,7 +79,7 @@ sub stop_nginx
 {
   my ($out,$cmd);
   if ($config{'stop_cmd'} == 1) {
-    $cmd = "/etc/init.d/nginx stop";
+    $cmd = "service nginx stop";
   }
   elsif ($config{'stop_cmd'} == 2) {
     # use nginx_path
@@ -116,7 +116,7 @@ sub start_nginx
   }
 
   if ($config{'start_cmd'} == 1) {
-    $cmd = "/etc/init.d/nginx start";
+    $cmd = "service nginx start";
   }
   elsif ($config{'start_cmd'} == 2) {
     # use nginx_path
@@ -144,7 +144,7 @@ sub reload_nginx
 {
   my ($out,$cmd);
   if ($config{'apply_cmd'} == 1) {
-    $cmd = "/etc/init.d/nginx reload";
+    $cmd = "service nginx reload";
   }
   elsif ($config{'apply_cmd'} == 2) {
     # use nginx_path
@@ -169,7 +169,7 @@ sub test_config
 {
   return undef;
   if ($config{'test_config'} == 1) {
-    my $out = &backquote_command("(/etc/init.d/nginx configtest) 2>&1");
+    my $out = &backquote_command("(nginx -t) 2>&1");
     if ($out =~ /failed/) {
       return "<pre>".&html_escape($out)."</pre>";
     }
